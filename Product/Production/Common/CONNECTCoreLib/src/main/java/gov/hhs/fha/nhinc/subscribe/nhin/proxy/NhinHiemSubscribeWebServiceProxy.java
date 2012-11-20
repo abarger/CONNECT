@@ -28,6 +28,23 @@ package gov.hhs.fha.nhinc.subscribe.nhin.proxy;
 
 //import java.lang.reflect.InvocationTargetException;
 
+import java.util.Map;
+
+import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.Service;
+
+import oasis.names.tc.xacml._2_0.context.schema.os.DecisionType;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.oasis_open.docs.wsn.b_2.Subscribe;
+import org.oasis_open.docs.wsn.b_2.SubscribeCreationFailedFaultType;
+import org.oasis_open.docs.wsn.b_2.SubscribeResponse;
+import org.oasis_open.docs.wsn.bw_2.NotificationProducer;
+import org.oasis_open.docs.wsn.bw_2.SubscribeCreationFailedFault;
+import org.w3c.dom.Element;
+
 import gov.hhs.fha.nhinc.auditrepository.AuditRepositoryLogger;
 import gov.hhs.fha.nhinc.auditrepository.nhinc.proxy.AuditRepositoryProxy;
 import gov.hhs.fha.nhinc.auditrepository.nhinc.proxy.AuditRepositoryProxyObjectFactory;
@@ -39,16 +56,6 @@ import gov.hhs.fha.nhinc.connectmgr.ConnectionManagerException;
 import gov.hhs.fha.nhinc.nhinclib.NhincConstants;
 import gov.hhs.fha.nhinc.nhinclib.NullChecker;
 import gov.hhs.fha.nhinc.webserviceproxy.WebServiceProxyHelper;
-
-import javax.xml.namespace.QName;
-import javax.xml.ws.BindingProvider;
-import javax.xml.ws.Service;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.oasis_open.docs.wsn.b_2.Subscribe;
-import org.oasis_open.docs.wsn.b_2.SubscribeResponse;
-import org.oasis_open.docs.wsn.bw_2.NotificationProducer;
 
 /**
  *
@@ -133,6 +140,13 @@ public class NhinHiemSubscribeWebServiceProxy implements NhinHiemSubscribeProxy 
         }
     }
 
+    /**
+     * Create generic audit log for response messages.
+     * @param response the response to be audited
+     * @param assertion the assertion to be audited
+     * @param logDirection the direction of the log to be audited (Inbound or Outbound)
+     * @param logInterface the interface of the log being audited (NHIN or Adapter)
+     */
     private void auditResponseMessage(SubscribeResponse response, AssertionType assertion) {
         log.debug("In NhinHiemSubscribeWebServiceProxy.auditResponseMessage");
         try {
@@ -143,7 +157,7 @@ public class NhinHiemSubscribeWebServiceProxy implements NhinHiemSubscribeProxy 
             message.setSubscribeResponse(response);
 
             LogEventRequestType auditLogMsg = auditLogger.logSubscribeResponse(message,
-                    NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE);
+                     NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE);
 
             if (auditLogMsg != null) {
                 AuditRepositoryProxyObjectFactory auditRepoFactory = new AuditRepositoryProxyObjectFactory();
@@ -166,7 +180,9 @@ public class NhinHiemSubscribeWebServiceProxy implements NhinHiemSubscribeProxy 
 
                 // Initialize secured port
                 getWebServiceProxyHelper().initializeSecurePort((BindingProvider) oPort, url,
-                        NhincConstants.SUBSCRIBE_ACTION, WS_ADDRESSING_ACTION, assertIn);
+                        NhincConstants.HIEM_SUBSCRIBE_SERVICE_NAME, WS_ADDRESSING_ACTION, assertIn);
+                
+                ((BindingProvider)oPort).getRequestContext().put(NhincConstants.TARGET_API_LEVEL, GATEWAY_API_LEVEL.LEVEL_g0);
             } else {
                 log.error("Unable to obtain service - no port created.");
             }

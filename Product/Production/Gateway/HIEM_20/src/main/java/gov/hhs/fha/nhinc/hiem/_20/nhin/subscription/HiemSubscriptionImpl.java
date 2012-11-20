@@ -82,7 +82,6 @@ public class HiemSubscriptionImpl {
 
         NhinSubscribeProcessor subscribeProcessor = new NhinSubscribeProcessor();
         AssertionType assertion = SamlTokenExtractor.GetAssertion(context);
-
         // Audit the input message
         auditInputMessage(subscribeRequest, assertion);
 

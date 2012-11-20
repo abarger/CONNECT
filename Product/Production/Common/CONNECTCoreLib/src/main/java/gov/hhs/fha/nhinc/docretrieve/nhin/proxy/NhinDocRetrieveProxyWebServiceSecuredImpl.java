@@ -49,6 +49,7 @@ import gov.hhs.fha.nhinc.nhinclib.NhincConstants;
 import gov.hhs.fha.nhinc.nhinclib.NhincConstants.GATEWAY_API_LEVEL;
 import gov.hhs.fha.nhinc.nhinclib.NullChecker;
 import gov.hhs.fha.nhinc.webserviceproxy.WebServiceProxyHelper;
+import javax.xml.ws.BindingProvider;
 
 /**
  *
@@ -107,19 +108,19 @@ public class NhinDocRetrieveProxyWebServiceSecuredImpl implements NhinDocRetriev
                 log.debug("Before target system URL look up.");
                 url = oProxyHelper.getUrlFromTargetSystemByGatewayAPILevel(targetSystem, sServiceName, level);
                 log.debug("After target system URL look up. URL for service: " + sServiceName + " is: " + url);
-
+                for ( DocumentRequest doc : request.getDocumentRequest()){
+                    if (!doc.getHomeCommunityId().startsWith("urn:oid:")){
+                        log.debug("Document HomeCommunityId:"+doc.getHomeCommunityId());
+                        doc.setHomeCommunityId("urn:oid:" + doc.getHomeCommunityId());
+                    }
+                }
                 if (NullChecker.isNotNullish(url)) {
-                    RespondingGatewayRetrievePortType port = getPort(url, NhincConstants.DOC_RETRIEVE_ACTION,
+                    RespondingGatewayRetrievePortType port = getPort(url, NhincConstants.DOC_RETRIEVE_SERVICE_NAME,
                             WS_ADDRESSING_ACTION, assertion);
                     response = (RetrieveDocumentSetResponseType) oProxyHelper.invokePort(port,
                             RespondingGatewayRetrievePortType.class, "respondingGatewayCrossGatewayRetrieve", request);
                 } else {
                     log.error("Failed to call the web service (" + sServiceName + ").  The URL is null.");
-                }
-                for ( DocumentRequest doc : request.getDocumentRequest()){
-                    if (!doc.getHomeCommunityId().startsWith("urn:oid:")){
-                        doc.setHomeCommunityId("urn:oid:" + doc.getHomeCommunityId());
-                    }
                 }
             } else {
                 log.error("Failed to call the web service (" + sServiceName + ").  The input parameter is null.");

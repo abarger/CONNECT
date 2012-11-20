@@ -43,15 +43,6 @@ import gov.hhs.fha.nhinc.policyengine.adapter.proxy.PolicyEngineProxy;
 import gov.hhs.fha.nhinc.policyengine.adapter.proxy.PolicyEngineProxyObjectFactory;
 import gov.hhs.fha.nhinc.saml.extraction.SamlTokenExtractor;
 
-import javax.xml.ws.WebServiceContext;
-
-import oasis.names.tc.xacml._2_0.context.schema.os.DecisionType;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.oasis_open.docs.wsn.b_2.Notify;
-import org.w3c.dom.Element;
-
 /**
  *
  * @author jhoppesc
@@ -68,7 +59,6 @@ public class HiemNotifyImpl {
                 NhincConstants.HIEM_NOTIFY_SOAP_HDR_ATTR_TAG);
 
         try {
-            // String rawSoapMessage = extractSoapMessage(context, "notifySoapMessage");
             NhinNotifyProcessor notifyProcessor = new NhinNotifyProcessor();
             AssertionType assertion = SamlTokenExtractor.GetAssertion(context);
             auditInputMessage(notifyRequest, assertion);
@@ -79,8 +69,6 @@ public class HiemNotifyImpl {
             }
         } catch (Throwable t) {
             log.debug("Exception encountered processing a notify message: " + t.getMessage(), t);
-            // TODO: Add specific catch statements and throw the appropriate fault
-
         }
         log.debug("Exiting HiemNotifyImpl.notify");
     }

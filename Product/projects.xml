@@ -98,7 +98,7 @@
         <should.build>true</should.build>
         <should.deploy>true</should.deploy>
     </project>
-    
+
     <project>
         <name>AdminDistribution_10</name>
         <directory>/Production/Gateway/AdminDistribution_10</directory>
@@ -120,7 +120,7 @@
         <should.build>true</should.build>
         <should.deploy>true</should.deploy>
     </project>
-    
+
     <project>
         <name>HIEM_20</name>
         <directory>/Production/Gateway/HIEM_20/</directory>
@@ -134,7 +134,7 @@
         <dist.type>war</dist.type>
         <should.build>true</should.build>
         <should.deploy>true</should.deploy>
-    </project>    
+    </project>
     <project>
         <name>FTAConfigManager</name>
         <directory>/Production/Adapters/GenericFileTransfer/FTAConfigManager</directory>
@@ -244,13 +244,6 @@
     <project>
         <name>DocumentManagerEJB</name>
         <directory>/Production/Adapters/Framework/DocumentManagerEJB</directory>
-        <dist.type>jar</dist.type>
-        <should.build>true</should.build>
-        <should.deploy>true</should.deploy>
-    </project>
-    <project>
-        <name>AdapterMpiEJB</name>
-        <directory>/Production/Adapters/Framework/AdapterMpiEJB</directory>
         <dist.type>jar</dist.type>
         <should.build>true</should.build>
         <should.deploy>true</should.deploy>
