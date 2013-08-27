@@ -1,28 +1,28 @@
 /*
- * Copyright (c) 2012, United States Government, as represented by the Secretary of Health and Human Services. 
- * All rights reserved. 
+ * Copyright (c) 2012, United States Government, as represented by the Secretary of Health and Human Services.
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions are met: 
- *     * Redistributions of source code must retain the above 
- *       copyright notice, this list of conditions and the following disclaimer. 
- *     * Redistributions in binary form must reproduce the above copyright 
- *       notice, this list of conditions and the following disclaimer in the documentation 
- *       and/or other materials provided with the distribution. 
- *     * Neither the name of the United States Government nor the 
- *       names of its contributors may be used to endorse or promote products 
- *       derived from this software without specific prior written permission. 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above
+ *       copyright notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the documentation
+ *       and/or other materials provided with the distribution.
+ *     * Neither the name of the United States Government nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
- * DISCLAIMED. IN NO EVENT SHALL THE UNITED STATES GOVERNMENT BE LIABLE FOR ANY 
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND 
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE UNITED STATES GOVERNMENT BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package gov.hhs.fha.nhinc.docrepository.adapter;
 
@@ -67,14 +67,14 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryErrorList;
 import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 
 /**
- * 
+ *
  * @author jhoppesc
  */
 public class AdapterComponentDocRepositoryOrchImpl {
 
     public static final String XDS_RETRIEVE_RESPONSE_STATUS_FAILURE = "urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Failure";
     public static final String XDS_RETRIEVE_RESPONSE_STATUS_SUCCESS = "urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success";
-    public static final String XDS_AVAILABLILTY_STATUS_APPROVED = "Active";
+    public static final String XDS_AVAILABLILTY_STATUS_APPROVED = "Approved";
     public static final String XDS_STATUS = "urn:oasis:names:tc:ebxml-regrep:StatusType:Approved";
     public static final String XDS_STATUS_ONLINE = "Online";
     public static final String XDS_STATUS_OFFLINE = "Offline";
@@ -147,7 +147,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
 
     /**
      * Perform a document retrieve on the document repository.
-     * 
+     *
      * @param body Message containing docurment retrieve parameters
      * @return Document retrieve response message.
      */
@@ -210,7 +210,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
             }
 
         }
-        
+
         if (response.getRegistryResponse() == null) {
         	RegistryResponseType regResponse = new RegistryResponseType();
         	regResponse.setStatus(NhincConstants.NHINC_ADHOC_QUERY_SUCCESS_RESPONSE);
@@ -326,12 +326,12 @@ public class AdapterComponentDocRepositoryOrchImpl {
     }
 
     /**
-     * 
+     *
      * This method extracts the metadata and binary document from the request and stores them in the NHINC document
      * repository.
-     * 
+     *
      * NOTE: This method is NOT compliant to the XDS specification.
-     * 
+     *
      * @param body The ProvideAndRequestDocumentSet request to parse and store metadata and documents.
      * @return Returns an XDS successful or failure response message.
      */
@@ -787,8 +787,8 @@ public class AdapterComponentDocRepositoryOrchImpl {
 
                 log.debug("associationType object present");
 
-                
-                
+
+
                 if (NullChecker.isNullish(associationObj.getAssociationType())) {
                     RegistryError error = new oasis.names.tc.ebxml_regrep.xsd.rs._3.ObjectFactory()
                             .createRegistryError();
@@ -859,7 +859,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
     /**
      * This method extracts the value of a metadata item of a document from a list of XDS externalIdentifier objects
      * given the name of the metadata item.
-     * 
+     *
      * @param externalIdentifiers List of externalIdentifier objects which may contain the metadata item
      * @return Returns the string representation of the metadata item. Returns null if not present.
      */
@@ -885,7 +885,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
 
     /**
      * This method extracts metadata from the XDS classification element given the slotname of the metadata item.
-     * 
+     *
      * @param classifications A list of classifications to search through.
      * @param classificationSchemeUUID The classification scheme idendifier to search for.
      * @param slotName The name of the metadata item within the classification element.
@@ -916,7 +916,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
      * value (nodeRepresentation) - the representation of the code (nodeRepresentationName) - the id of the
      * extrinsicObject referenced by the given classification (classificationObject) - the id of the
      * classificationObject element in the request (id)
-     * 
+     *
      * @param classifications A list of classifications to search through.
      * @param classificationSchemeUUID The classification scheme idendifier to search for.
      * @param classificationValueName A string value indicating whether this method should return the classification
@@ -959,7 +959,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
 
     /**
      * Extracts the valueIndex value from an XDS request slot for a given metadata name.
-     * 
+     *
      * @param documentSlots A list of XDS metadata slots
      * @param slotName The name of the slot containing the desired metadata item
      * @param valueIndex For slot multivalued possibilities, the index value desired. If the value is < 0 then all
@@ -1013,7 +1013,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
 
     /**
      * Extracts the sourcePatientInfo pid value from an XDS request slot for the sourcePatientInfo element.
-     * 
+     *
      * @param documentSlots A list of XDS metadata slots
      * @param patientInfoName The name of the sourcePatientInfo pid containing the desired metadata item
      * @return Returns the value of the first metadata value with the given metadata name. Null if not present.
@@ -1040,7 +1040,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
 
     /**
      * This method extracts the list of event codes and prepares them for persistence into the doc NHINC repository
-     * 
+     *
      * @param classifications The list of metadata classification objects for the document
      * @param doc The NHINC document object to be persisted.
      */
